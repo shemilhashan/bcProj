@@ -1,15 +1,23 @@
 import React, {useState} from 'react';
-import {View, SafeAreaView, FlatList, ListRenderItem} from 'react-native';
+import {
+  View,
+  SafeAreaView,
+  FlatList,
+  ListRenderItem,
+  StyleSheet,
+} from 'react-native';
 import {SearchBar} from 'react-native-elements';
 import useMovies from '../hooks/useMovies';
 import {MovieListItem} from '../components/movieListItem';
 import useFavorites from '../hooks/useFavorites';
+
 interface Props {
   navigation: any;
 }
 export interface ItemProp {
   Title: string;
   imdbID: string;
+  Poster: string;
 }
 function DashboardScreen({navigation}: Props) {
   const [searchText, setSearchText] = useState<string>('');
@@ -31,7 +39,7 @@ function DashboardScreen({navigation}: Props) {
   };
   return (
     <SafeAreaView style={{flex: 1}}>
-      <View style={{flex: 1, padding: 0}}>
+      <View style={styles.container}>
         <SearchBar
           platform="default"
           placeholder="Type Here..."
@@ -47,5 +55,12 @@ function DashboardScreen({navigation}: Props) {
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 0,
+  },
+});
 
 export default DashboardScreen;

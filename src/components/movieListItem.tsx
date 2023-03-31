@@ -1,6 +1,7 @@
 import React from 'react';
-import {View, TouchableOpacity, Text, Image} from 'react-native';
+import {View, TouchableOpacity, Text, Image, StyleSheet} from 'react-native';
 import {ItemProp} from '../screens/dashboard';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 interface ListItemProps {
   movie: ItemProp;
   isFavorite?: boolean;
@@ -20,19 +21,50 @@ const MovieListItem = ({
       saveFavorite(movie);
     }
   };
+  const FavoriteButton = () => {
+    if (isFavorite) {
+      return <Icon name="favorite" size={30} color="pink" />;
+    } else {
+      return <Icon name="favorite-border" size={30} color="gray" />;
+    }
+  };
   return (
-    <View
-      style={{
-        backgroundColor: 'black',
-        height: 60,
-        marginTop: 5,
-        justifyContent: 'center',
-      }}>
-      <Text style={{marginLeft: 20}}>{movie.Title}</Text>
-      <TouchableOpacity onPress={onPressFavorite}>
-        <Text>{isFavorite ? 'Remove' : 'Add'}</Text>
+    <View style={styles.container}>
+      <Image
+        source={{uri: movie.Poster}}
+        style={styles.poster}
+        resizeMode="contain"
+      />
+      <Text style={styles.title}>{movie.Title}</Text>
+      <TouchableOpacity
+        onPress={onPressFavorite}
+        style={styles.buttonContainer}>
+        <FavoriteButton />
       </TouchableOpacity>
     </View>
   );
 };
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: 'black',
+    height: 60,
+    marginTop: 5,
+    alignItems: 'center',
+    flexDirection: 'row',
+    borderRadius: 10,
+    marginHorizontal: 10,
+  },
+  title: {
+    marginLeft: 0,
+    flex: 1,
+  },
+  buttonContainer: {
+    width: 100,
+    alignItems: 'center',
+  },
+  poster: {
+    height: 50,
+    width: 100,
+  },
+});
 export {MovieListItem};
