@@ -5,7 +5,7 @@ const useMovies = (searchText: string) => {
   const [movieData, setMovieData] = useState<Movie[]>([]);
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [hasNext, setHasNext] = useState<boolean>(false);
-  const [errorText, setErrorText] = useState<string>('');
+  const [errorTextMovies, setErrorTextMovies] = useState<string>('');
   const getData = async (nextLoad: boolean) => {
     try {
       const data = await axios.get(
@@ -24,7 +24,7 @@ const useMovies = (searchText: string) => {
         }
       }
     } catch (error) {
-      setErrorText('Something went wrong. Try again.');
+      setErrorTextMovies('Something went wrong. Try again.');
     }
   };
   useEffect(() => {
@@ -40,7 +40,7 @@ const useMovies = (searchText: string) => {
   useEffect(() => {
     getData(true);
   }, [pageNumber]);
-  return {movieData, errorText, getNextPage};
+  return {movieData, errorTextMovies, getNextPage, setErrorTextMovies};
 };
 
 export default useMovies;
