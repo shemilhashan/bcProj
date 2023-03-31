@@ -15,7 +15,7 @@ import {BaseProps} from '../dto/base';
 
 function HomeScreen({navigation}: BaseProps) {
   const [searchText, setSearchText] = useState<string>('');
-  const {movieData} = useMovies(searchText);
+  const {movieData, getNextPage} = useMovies(searchText);
   const {saveFavorite, removeFavorite, checkIfFavorite} = useFavorites();
   const renderMovie: ListRenderItem<Movie> = ({item}) => {
     const isFavorite = checkIfFavorite(item);
@@ -41,6 +41,8 @@ function HomeScreen({navigation}: BaseProps) {
           data={movieData}
           renderItem={renderMovie}
           keyExtractor={(item: Movie) => item.imdbID}
+          onEndReachedThreshold={0.01}
+          onEndReached={getNextPage}
         />
       </View>
     </SafeAreaView>
