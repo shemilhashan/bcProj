@@ -13,11 +13,11 @@ import useFavorites from '../hooks/useFavorites';
 import {Movie} from '../dto/movie';
 import {BaseProps} from '../dto/base';
 import {Root} from 'react-native-popup-confirm-toast';
-
+import Spinner from 'react-native-loading-spinner-overlay';
 function HomeScreen({navigation}: BaseProps) {
   const [searchText, setSearchText] = useState<string>('');
   const {saveFavorite, confirmRemoveFavorite, checkIfFavorite} = useFavorites();
-  const {movieData, getNextPage} = useMovies(searchText);
+  const {movieData, loading, getNextPage, search} = useMovies(searchText);
   const renderMovie: ListRenderItem<Movie> = ({item}) => {
     const isFavorite = checkIfFavorite(item);
     return (
@@ -32,12 +32,19 @@ function HomeScreen({navigation}: BaseProps) {
   return (
     <SafeAreaView style={{flex: 1}}>
       <Root>
+        <Spinner
+          visible={loading}
+          textContent={'Loading...'}
+          textStyle={styles.spinnerTextStyle}
+        />
         <View style={styles.container}>
           <SearchBar
             platform="default"
             placeholder="Type Here..."
             onChangeText={setSearchText}
             value={searchText}
+            returnKeyType="search"
+            onSubmitEditing={search}
           />
           <FlatList<Movie>
             data={movieData}
@@ -56,6 +63,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 0,
+  },
+  spinnerTextStyle: {
+    color: '#FFF',
   },
 });
 
