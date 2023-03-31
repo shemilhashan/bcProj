@@ -1,7 +1,25 @@
 import React from 'react';
 import {View, TouchableOpacity, Text, Image} from 'react-native';
 import {ItemProp} from '../screens/dashboard';
-const MovieListItem = ({movie}: {movie: ItemProp}) => {
+interface ListItemProps {
+  movie: ItemProp;
+  isFavorite?: boolean;
+  saveFavorite: (movie: ItemProp) => void;
+  removeFavorite: (movie: ItemProp) => void;
+}
+const MovieListItem = ({
+  movie,
+  isFavorite = false,
+  saveFavorite,
+  removeFavorite,
+}: ListItemProps) => {
+  const onPressFavorite = () => {
+    if (isFavorite) {
+      removeFavorite(movie);
+    } else {
+      saveFavorite(movie);
+    }
+  };
   return (
     <View
       style={{
@@ -11,6 +29,9 @@ const MovieListItem = ({movie}: {movie: ItemProp}) => {
         justifyContent: 'center',
       }}>
       <Text style={{marginLeft: 20}}>{movie.Title}</Text>
+      <TouchableOpacity onPress={onPressFavorite}>
+        <Text>{isFavorite ? 'Remove' : 'Add'}</Text>
+      </TouchableOpacity>
     </View>
   );
 };
