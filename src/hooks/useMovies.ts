@@ -14,7 +14,6 @@ const useMovies = (searchText: string) => {
       getData();
     }
   }, [searchText]);
-  console.log('movieData: ', movieData);
   return {movieData};
 };
 
