@@ -23,13 +23,28 @@ const MovieListItem = ({
       return <Icon name="favorite-border" size={30} color="gray" />;
     }
   };
+  const MovieThumbnail = () => {
+    if (!movie.Poster || movie.Poster == 'N/A') {
+      return (
+        <Image
+          source={require('../assets/images/noPoster.png')}
+          style={[styles.poster, styles.emptyImage]}
+          resizeMode="contain"
+        />
+      );
+    } else {
+      return (
+        <Image
+          source={{uri: movie.Poster}}
+          style={styles.poster}
+          resizeMode="contain"
+        />
+      );
+    }
+  };
   return (
     <View style={styles.container}>
-      <Image
-        source={{uri: movie.Poster}}
-        style={styles.poster}
-        resizeMode="contain"
-      />
+      <MovieThumbnail />
       <Text style={styles.title}>{movie.Title}</Text>
       <TouchableOpacity
         onPress={onPressFavorite}
@@ -60,6 +75,9 @@ const styles = StyleSheet.create({
   poster: {
     height: 50,
     width: 100,
+  },
+  emptyImage: {
+    tintColor: 'white',
   },
 });
 export {MovieListItem};
