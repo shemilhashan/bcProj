@@ -13,13 +13,10 @@ import useFavorites from '../hooks/useFavorites';
 import {Movie} from '../dto/movie';
 import {BaseProps} from '../dto/base';
 
-function DashboardScreen({navigation}: BaseProps) {
+function HomeScreen({navigation}: BaseProps) {
   const [searchText, setSearchText] = useState<string>('');
   const {movieData} = useMovies(searchText);
   const {saveFavorite, removeFavorite, checkIfFavorite} = useFavorites();
-  const navigateToFavorites = () => {
-    navigation.navigate('Favorites');
-  };
   const renderMovie: ListRenderItem<Movie> = ({item}) => {
     const isFavorite = checkIfFavorite(item);
     return (
@@ -57,4 +54,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DashboardScreen;
+export default HomeScreen;

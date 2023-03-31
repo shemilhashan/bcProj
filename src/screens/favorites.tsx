@@ -1,14 +1,56 @@
-import * as React from 'react';
-import {View, Text, Button} from 'react-native';
+import React, {useState} from 'react';
+import {
+  View,
+  SafeAreaView,
+  FlatList,
+  ListRenderItem,
+  StyleSheet,
+} from 'react-native';
+import {SearchBar} from 'react-native-elements';
+import {MovieListItem} from '../components/movieListItem';
 import {BaseProps} from '../dto/base';
+import {Movie} from '../dto/movie';
+import useFavorites from '../hooks/useFavorites';
 
 function FavoritesScreen({navigation}: BaseProps) {
+  const [searchText, setSearchText] = useState<string>('');
+  const {filteredFavoriteData, saveFavorite, removeFavorite, checkIfFavorite} =
+    useFavorites(searchText);
+  const renderMovie: ListRenderItem<Movie> = ({item}) => {
+    const isFavorite = checkIfFavorite(item);
+    return (
+      <MovieListItem
+        movie={item}
+        saveFavorite={saveFavorite}
+        removeFavorite={removeFavorite}
+        isFavorite={isFavorite}
+      />
+    );
+  };
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Favorites</Text>
-      <Button title="Go back" onPress={() => navigation.goBack()} />
-    </View>
+    <SafeAreaView style={{flex: 1}}>
+      <View style={styles.container}>
+        <SearchBar
+          platform="default"
+          placeholder="Type Here..."
+          onChangeText={setSearchText}
+          value={searchText}
+        />
+        <FlatList<Movie>
+          data={filteredFavoriteData}
+          renderItem={renderMovie}
+          keyExtractor={(item: Movie) => item.imdbID}
+        />
+      </View>
+    </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 0,
+  },
+});
 
 export default FavoritesScreen;
