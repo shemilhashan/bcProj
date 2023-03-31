@@ -14,7 +14,7 @@ const useFavorites = (searchText?: string) => {
     const listOfMoviesToSave = favoriteData.filter(
       movieObj => movie.imdbID !== movieObj.imdbID,
     );
-    const strMovieList = await JSON.stringify(listOfMoviesToSave);
+    const strMovieList = JSON.stringify(listOfMoviesToSave);
     await AsyncStorage.setItem('favoriteMovies', strMovieList);
     getFavorites();
   };

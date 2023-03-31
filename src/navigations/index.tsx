@@ -19,8 +19,6 @@ function MainNavigation(): JSX.Element {
             } else if (route.name === 'Favorites') {
               iconName = 'favorite';
             }
-
-            // You can return any component that you like here!
             return (
               <Icon
                 name={iconName}
