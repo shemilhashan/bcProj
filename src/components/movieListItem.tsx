@@ -18,7 +18,7 @@ const MovieListItem = ({
   };
   const FavoriteButton = () => {
     if (isFavorite) {
-      return <Icon name="favorite" size={30} color="pink" />;
+      return <Icon name="favorite" size={30} color="#E11299" />;
     } else {
       return <Icon name="favorite-border" size={30} color="gray" />;
     }
