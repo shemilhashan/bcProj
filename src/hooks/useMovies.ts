@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import {Movie} from '../dto/movie';
+import {Popup} from 'react-native-popup-confirm-toast';
 const useMovies = (searchText: string) => {
   const [movieData, setMovieData] = useState<Movie[]>([]);
   const [pageNumber, setPageNumber] = useState<number>(1);
@@ -40,6 +41,20 @@ const useMovies = (searchText: string) => {
   useEffect(() => {
     getData(true);
   }, [pageNumber]);
+  useEffect(() => {
+    if (errorTextMovies) {
+      Popup.show({
+        type: 'danger',
+        title: 'Failed!',
+        textBody: errorTextMovies,
+        buttonText: 'Ok',
+        callback: () => {
+          setErrorTextMovies('');
+          Popup.hide();
+        },
+      });
+    }
+  }, [errorTextMovies]);
   return {movieData, errorTextMovies, getNextPage, setErrorTextMovies};
 };
 

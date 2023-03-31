@@ -1,6 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useMemo} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Movie} from '../dto/movie';
+import {Popup} from 'react-native-popup-confirm-toast';
 const useFavorites = (searchText?: string) => {
   const [favoriteData, setFavoriteData] = useState<Movie[]>([]);
   const [filteredFavoriteData, setFilteredFavoriteData] = useState<Movie[]>([]);
@@ -66,6 +67,35 @@ const useFavorites = (searchText?: string) => {
       setFilteredFavoriteData(favoriteData);
     }
   }, [searchText]);
+
+  useEffect(() => {
+    if (errorTextFavorites) {
+      Popup.show({
+        type: 'danger',
+        title: 'Failed!',
+        textBody: errorTextFavorites,
+        buttonText: 'Ok',
+        callback: () => {
+          setErrorTextFavorites('');
+          Popup.hide();
+        },
+      });
+    }
+  }, [errorTextFavorites]);
+  useEffect(() => {
+    if (successMessageFavorite) {
+      Popup.show({
+        type: 'success',
+        title: 'Success!',
+        textBody: successMessageFavorite,
+        buttonText: 'Ok',
+        callback: () => {
+          setSuccessMessageFavorite('');
+          Popup.hide();
+        },
+      });
+    }
+  }, [successMessageFavorite]);
 
   return {
     favoriteData,

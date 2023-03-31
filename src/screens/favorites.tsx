@@ -11,7 +11,7 @@ import {MovieListItem} from '../components/movieListItem';
 import {BaseProps} from '../dto/base';
 import {Movie} from '../dto/movie';
 import useFavorites from '../hooks/useFavorites';
-
+import {Root} from 'react-native-popup-confirm-toast';
 function FavoritesScreen({navigation}: BaseProps) {
   const [searchText, setSearchText] = useState<string>('');
   const {filteredFavoriteData, saveFavorite, removeFavorite, checkIfFavorite} =
@@ -29,19 +29,21 @@ function FavoritesScreen({navigation}: BaseProps) {
   };
   return (
     <SafeAreaView style={{flex: 1}}>
-      <View style={styles.container}>
-        <SearchBar
-          platform="default"
-          placeholder="Type Here..."
-          onChangeText={setSearchText}
-          value={searchText}
-        />
-        <FlatList<Movie>
-          data={filteredFavoriteData}
-          renderItem={renderMovie}
-          keyExtractor={(item: Movie) => item.imdbID}
-        />
-      </View>
+      <Root>
+        <View style={styles.container}>
+          <SearchBar
+            platform="default"
+            placeholder="Type Here..."
+            onChangeText={setSearchText}
+            value={searchText}
+          />
+          <FlatList<Movie>
+            data={filteredFavoriteData}
+            renderItem={renderMovie}
+            keyExtractor={(item: Movie) => item.imdbID}
+          />
+        </View>
+      </Root>
     </SafeAreaView>
   );
 }

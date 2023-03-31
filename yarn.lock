@@ -5952,6 +5952,11 @@ react-native-gradle-plugin@^0.71.17:
   resolved "https://registry.yarnpkg.com/react-native-gradle-plugin/-/react-native-gradle-plugin-0.71.17.tgz#cf780a27270f0a32dca8184eff91555d7627dd00"
   integrity sha512-OXXYgpISEqERwjSlaCiaQY6cTY5CH6j73gdkWpK0hedxtiWMWgH+i5TOi4hIGYitm9kQBeyDu+wim9fA8ROFJA==
 
+react-native-popup-confirm-toast@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/react-native-popup-confirm-toast/-/react-native-popup-confirm-toast-2.3.1.tgz#df159ea00b80cab059fd41a513d10e9ac14cc43a"
+  integrity sha512-QQnU0PZps/5hXVMGgNT0InGYTijJvycy9Q07IRrXYw9Zk7QP5mAl3qmJUOUs3cnl9nQN9SoEtk+I+dqx4zmHMw==
+
 react-native-ratings@^8.1.0:
   version "8.1.0"
   resolved "https://registry.yarnpkg.com/react-native-ratings/-/react-native-ratings-8.1.0.tgz#3fa9ad29128dc3a88e59518ba151e61c59dd0647"
