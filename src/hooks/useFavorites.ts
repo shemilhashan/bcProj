@@ -2,8 +2,13 @@ import React, {useState, useEffect, useMemo} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Movie} from '../dto/movie';
 import {Popup} from 'react-native-popup-confirm-toast';
+import {useSelector, useDispatch} from 'react-redux';
+import {setFavorites} from '../store/favorites/actions';
 const useFavorites = (searchText?: string) => {
-  const [favoriteData, setFavoriteData] = useState<Movie[]>([]);
+  const favoriteData = useSelector(
+    (state: any) => state.favorites.favoriteData,
+  );
+  const dispatch = useDispatch();
   const [filteredFavoriteData, setFilteredFavoriteData] = useState<Movie[]>([]);
   const [errorTextFavorites, setErrorTextFavorites] = useState<string>('');
   const [successMessageFavorite, setSuccessMessageFavorite] =
@@ -22,7 +27,7 @@ const useFavorites = (searchText?: string) => {
   const removeFavorite = async (movie: Movie) => {
     try {
       const listOfMoviesToSave = favoriteData.filter(
-        movieObj => movie.imdbID !== movieObj.imdbID,
+        (movieObj: Movie) => movie.imdbID !== movieObj.imdbID,
       );
       const strMovieList = JSON.stringify(listOfMoviesToSave);
       await AsyncStorage.setItem('favoriteMovies', strMovieList);
@@ -51,7 +56,7 @@ const useFavorites = (searchText?: string) => {
 
   const checkIfFavorite = (movie: Movie) => {
     const objExists = favoriteData.filter(
-      movieObj => movie.imdbID === movieObj.imdbID,
+      (movieObj: Movie) => movie.imdbID === movieObj.imdbID,
     );
     return objExists?.length >= 1;
   };
@@ -61,7 +66,7 @@ const useFavorites = (searchText?: string) => {
       const listOfFavorites = strMovieList
         ? await JSON.parse(strMovieList)
         : [];
-      setFavoriteData(listOfFavorites);
+      dispatch(setFavorites(listOfFavorites));
       setFilteredFavoriteData(listOfFavorites);
     } catch (error) {
       setErrorTextFavorites(
@@ -76,7 +81,7 @@ const useFavorites = (searchText?: string) => {
 
   useEffect(() => {
     if (searchText) {
-      const filteredData = favoriteData.filter(movie =>
+      const filteredData = favoriteData.filter((movie: Movie) =>
         movie.Title.includes(searchText),
       );
       setFilteredFavoriteData(filteredData ? filteredData : []);
@@ -113,6 +118,10 @@ const useFavorites = (searchText?: string) => {
       });
     }
   }, [successMessageFavorite]);
+
+  useEffect(() => {
+    setFilteredFavoriteData(favoriteData);
+  }, [favoriteData]);
 
   return {
     favoriteData,

@@ -1,10 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import {Movie} from '../dto/movie';
 import {Popup} from 'react-native-popup-confirm-toast';
-
+import {useSelector, useDispatch} from 'react-redux';
+import {setMovies} from '../store/movies/actions';
 const useMovies = (searchText: string) => {
-  const [movieData, setMovieData] = useState<Movie[]>([]);
+  const movieData = useSelector((state: any) => state.movies.movieData);
+  const dispatch = useDispatch();
+  // const [movieData, setMovieData] = useState<Movie[]>([]);
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [hasNext, setHasNext] = useState<boolean>(false);
   const [errorTextMovies, setErrorTextMovies] = useState<string>('');
@@ -17,9 +19,10 @@ const useMovies = (searchText: string) => {
       );
       if (data && data.data) {
         if (nextLoad) {
-          data.data.Search && setMovieData([...movieData, ...data.data.Search]);
+          data.data.Search &&
+            dispatch(setMovies([...movieData, ...data.data.Search]));
         } else {
-          setMovieData(data.data.Search);
+          dispatch(setMovies(data.data.Search));
         }
         if (pageNumber * 10 < data.data?.totalResults) {
           setHasNext(true);
