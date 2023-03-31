@@ -1,13 +1,8 @@
 import React from 'react';
 import {View, TouchableOpacity, Text, Image, StyleSheet} from 'react-native';
-import {ItemProp} from '../screens/dashboard';
+import {ListItemProps} from '../dto/listItem';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-interface ListItemProps {
-  movie: ItemProp;
-  isFavorite?: boolean;
-  saveFavorite: (movie: ItemProp) => void;
-  removeFavorite: (movie: ItemProp) => void;
-}
+
 const MovieListItem = ({
   movie,
   isFavorite = false,

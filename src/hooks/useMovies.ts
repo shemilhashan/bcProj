@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import { ItemProp } from '../screens/dashboard';
+import {Movie} from '../dto/movie';
 const useMovies = (searchText: string) => {
-  const [movieData, setMovieData] = useState<ItemProp[]>([]);
+  const [movieData, setMovieData] = useState<Movie[]>([]);
   useEffect(() => {
     const getData = async () => {
       const data = await axios.get(
@@ -14,7 +14,7 @@ const useMovies = (searchText: string) => {
       getData();
     }
   }, [searchText]);
-  console.log('movieData: ', movieData)
+  console.log('movieData: ', movieData);
   return {movieData};
 };
 

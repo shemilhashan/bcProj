@@ -10,23 +10,17 @@ import {SearchBar} from 'react-native-elements';
 import useMovies from '../hooks/useMovies';
 import {MovieListItem} from '../components/movieListItem';
 import useFavorites from '../hooks/useFavorites';
+import {Movie} from '../dto/movie';
+import {BaseProps} from '../dto/base';
 
-interface Props {
-  navigation: any;
-}
-export interface ItemProp {
-  Title: string;
-  imdbID: string;
-  Poster: string;
-}
-function DashboardScreen({navigation}: Props) {
+function DashboardScreen({navigation}: BaseProps) {
   const [searchText, setSearchText] = useState<string>('');
   const {movieData} = useMovies(searchText);
   const {saveFavorite, removeFavorite, checkIfFavorite} = useFavorites();
   const navigateToFavorites = () => {
     navigation.navigate('Favorites');
   };
-  const renderMovie: ListRenderItem<ItemProp> = ({item}) => {
+  const renderMovie: ListRenderItem<Movie> = ({item}) => {
     const isFavorite = checkIfFavorite(item);
     return (
       <MovieListItem
@@ -46,10 +40,10 @@ function DashboardScreen({navigation}: Props) {
           onChangeText={setSearchText}
           value={searchText}
         />
-        <FlatList<ItemProp>
+        <FlatList<Movie>
           data={movieData}
           renderItem={renderMovie}
-          keyExtractor={(item: ItemProp) => item.imdbID}
+          keyExtractor={(item: Movie) => item.imdbID}
         />
       </View>
     </SafeAreaView>

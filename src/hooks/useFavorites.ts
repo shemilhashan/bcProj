@@ -1,15 +1,15 @@
 import React, {useState, useEffect} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {ItemProp} from '../screens/dashboard';
+import {Movie} from '../dto/movie';
 const useFavorites = () => {
-  const [favoriteData, setFavoriteData] = useState<ItemProp[]>([]);
-  const saveFavorite = async (movie: ItemProp) => {
+  const [favoriteData, setFavoriteData] = useState<Movie[]>([]);
+  const saveFavorite = async (movie: Movie) => {
     const listOfMoviesToSave = [...favoriteData, movie];
     const strMovieList = await JSON.stringify(listOfMoviesToSave);
     await AsyncStorage.setItem('favoriteMovies', strMovieList);
     getFavorites();
   };
-  const removeFavorite = async (movie: ItemProp) => {
+  const removeFavorite = async (movie: Movie) => {
     const listOfMoviesToSave = favoriteData.filter(
       movieObj => movie.imdbID !== movieObj.imdbID,
     );
@@ -17,7 +17,7 @@ const useFavorites = () => {
     await AsyncStorage.setItem('favoriteMovies', strMovieList);
     getFavorites();
   };
-  const checkIfFavorite = (movie: ItemProp) => {
+  const checkIfFavorite = (movie: Movie) => {
     const objExists = favoriteData.filter(
       movieObj => movie.imdbID === movieObj.imdbID,
     );
