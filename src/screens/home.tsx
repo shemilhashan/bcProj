@@ -16,7 +16,7 @@ import {Root} from 'react-native-popup-confirm-toast';
 
 function HomeScreen({navigation}: BaseProps) {
   const [searchText, setSearchText] = useState<string>('');
-  const {saveFavorite, removeFavorite, checkIfFavorite} = useFavorites();
+  const {saveFavorite, confirmRemoveFavorite, checkIfFavorite} = useFavorites();
   const {movieData, getNextPage} = useMovies(searchText);
   const renderMovie: ListRenderItem<Movie> = ({item}) => {
     const isFavorite = checkIfFavorite(item);
@@ -24,7 +24,7 @@ function HomeScreen({navigation}: BaseProps) {
       <MovieListItem
         movie={item}
         saveFavorite={saveFavorite}
-        removeFavorite={removeFavorite}
+        removeFavorite={confirmRemoveFavorite}
         isFavorite={isFavorite}
       />
     );

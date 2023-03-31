@@ -32,6 +32,23 @@ const useFavorites = (searchText?: string) => {
       setErrorTextFavorites('Removing from favorite failed. Try again.');
     }
   };
+
+  const confirmRemoveFavorite = async (movie: Movie) => {
+    Popup.show({
+      type: 'confirm',
+      title: 'Remove!',
+      textBody: 'Are you sure you want to remove this movie?',
+      buttonText: 'Remove',
+      confirmText: 'Cancel',
+      callback: () => {
+        removeFavorite(movie);
+      },
+      cancelCallback: () => {
+        Popup.hide();
+      },
+    });
+  };
+
   const checkIfFavorite = (movie: Movie) => {
     const objExists = favoriteData.filter(
       movieObj => movie.imdbID === movieObj.imdbID,
@@ -107,6 +124,7 @@ const useFavorites = (searchText?: string) => {
     checkIfFavorite,
     setErrorTextFavorites,
     setSuccessMessageFavorite,
+    confirmRemoveFavorite,
   };
 };
 

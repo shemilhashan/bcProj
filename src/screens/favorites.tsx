@@ -14,15 +14,19 @@ import useFavorites from '../hooks/useFavorites';
 import {Root} from 'react-native-popup-confirm-toast';
 function FavoritesScreen({navigation}: BaseProps) {
   const [searchText, setSearchText] = useState<string>('');
-  const {filteredFavoriteData, saveFavorite, removeFavorite, checkIfFavorite} =
-    useFavorites(searchText);
+  const {
+    filteredFavoriteData,
+    saveFavorite,
+    confirmRemoveFavorite,
+    checkIfFavorite,
+  } = useFavorites(searchText);
   const renderMovie: ListRenderItem<Movie> = ({item}) => {
     const isFavorite = checkIfFavorite(item);
     return (
       <MovieListItem
         movie={item}
         saveFavorite={saveFavorite}
-        removeFavorite={removeFavorite}
+        removeFavorite={confirmRemoveFavorite}
         isFavorite={isFavorite}
       />
     );
