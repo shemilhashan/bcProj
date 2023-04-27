@@ -1,6 +1,6 @@
 Guide to run the app:
 1. Clone the repo
-2. install node modules with 'npm install' or 'yarn install'
+2. yarn install
 3. run the app with 'npx react-native run-android' or 'yarn android'. use the same methods for ios.
 
 Launched home:
